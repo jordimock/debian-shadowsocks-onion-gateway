@@ -17,4 +17,4 @@ This configuration is flexible and can be used in a variety of use cases such as
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+Licensed under the Prostokvashino License. See [LICENSE.txt](LICENSE.txt) for details.
