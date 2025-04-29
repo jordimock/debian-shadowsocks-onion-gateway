@@ -62,7 +62,7 @@ log "Writing frps.ini config..."
   echo "bind_addr = 127.0.0.1"
   echo "bind_port = $FRP_PORT"
   echo "token = $_FRP_TOKEN"
-} >> "$FRP_CONF_DIR/frps.ini"
+} > "$FRP_CONF_DIR/frps.ini"
 
 
 
@@ -80,7 +80,7 @@ log "Creating systemd service for frps..."
   echo ""
   echo "[Install]"
   echo "WantedBy=multi-user.target"
-} >> /etc/systemd/system/frps.service
+} > /etc/systemd/system/frps.service
 
 log "Enabling and starting frps..."
 systemctl daemon-reexec
