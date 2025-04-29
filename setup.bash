@@ -9,7 +9,7 @@ TOR_HIDDEN_SERVICE_DIR="/var/lib/tor/shadowsocks-domain"
 TOR_WAIT=10
 
 # frp config
-FRP_VERSION="0.52.3"
+FRP_VERSION="0.62.1"
 FRP_PORT=7000
 FRP_INSTALL_DIR="/usr/local/bin"
 FRP_CONF_DIR="/etc/frp"
