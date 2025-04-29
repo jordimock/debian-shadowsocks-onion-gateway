@@ -43,6 +43,7 @@ err() {
 log "Installing dependencies..."
 apt update && apt install -y tor shadowsocks-libev jq curl || err "Package installation failed"
 
+
 # frp setup
 _FRP_TOKEN="$(openssl rand -hex 16)"
 
@@ -64,8 +65,6 @@ log "Writing frps.ini config..."
   echo "token = $_FRP_TOKEN"
 } > "$FRP_CONF_DIR/frps.ini"
 
-
-
 log "Creating systemd service for frps..."
 {
   echo ""
@@ -86,7 +85,8 @@ log "Enabling and starting frps..."
 systemctl daemon-reexec
 systemctl daemon-reload
 systemctl enable frps
-systemctl start frps
+systemctl restart frps
+
 
 # shadosocks setup
 log "Generating Shadowsocks password..."
@@ -107,6 +107,7 @@ jq -n \
 log "Enabling and starting Shadowsocks..."
 systemctl enable shadowsocks-libev || err "Failed to enable shadowsocks"
 systemctl restart shadowsocks-libev || err "Failed to start shadowsocks"
+
 
 # tor setup
 log "Configuring Tor hidden service (Single Hop)..."
