@@ -110,8 +110,6 @@ systemctl restart shadowsocks-libev || err "Failed to start shadowsocks"
 
 # tor setup
 log "Configuring Tor hidden service (Single Hop)..."
-mkdir -p "$TOR_HIDDEN_SERVICE_DIR"
-
 log "Writing clean /etc/tor/torrc configuration..."
 
 {
