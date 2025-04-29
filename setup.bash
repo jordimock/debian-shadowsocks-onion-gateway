@@ -112,25 +112,28 @@ systemctl restart shadowsocks-libev || err "Failed to start shadowsocks"
 log "Configuring Tor hidden service (Single Hop)..."
 mkdir -p "$TOR_HIDDEN_SERVICE_DIR"
 
-if ! grep -q "$TOR_HIDDEN_SERVICE_DIR" /etc/tor/torrc; then
-  log "Updating /etc/tor/torrc with hidden service config..."
+log "Writing clean /etc/tor/torrc configuration..."
 
-  {
-    echo ""
-    echo "# Shadowsocks Hidden Service (Single Hop)"
-    echo "HiddenServiceDir $TOR_HIDDEN_SERVICE_DIR"
-    echo "HiddenServicePort $SS_PORT 127.0.0.1:$SS_PORT"
-    echo "HiddenServicePort $FRP_PORT 127.0.0.1:$FRP_PORT"
-    echo "HiddenServiceSingleHopMode 1"
-    echo "HiddenServiceNonAnonymousMode 1"
-  } >> /etc/tor/torrc
-else
-  log "Hidden Service already configured in torrc"
-fi
+{
+  echo "# Tor configuration for Shadowsocks and FRP gateway"
+  echo ""
+  echo "# Logging"
+  echo "Log notice /var/log/tor/notices.log"
+  echo ""
+  echo "# Disable client mode"
+  echo "SocksPort 0"
+  echo ""
+  echo "# Hidden Service configuration"
+  echo "HiddenServiceDir $TOR_HIDDEN_SERVICE_DIR"
+  echo "HiddenServicePort $SS_PORT 127.0.0.1:$SS_PORT"
+  echo "HiddenServicePort $FRP_PORT 127.0.0.1:$FRP_PORT"
+  echo "HiddenServiceSingleHopMode 1"
+  echo "HiddenServiceNonAnonymousMode 1"
+} > /etc/tor/torrc
 
 log "Enabling and starting Tor..."
-systemctl enable tor || err "Failed to enable tor"
-systemctl restart tor || err "Failed to start tor"
+systemctl enable tor@default || err "Failed to enable tor"
+systemctl restart tor@default || err "Failed to start tor"
 
 log "Waiting for .onion hostname..."
 for i in $(seq 1 "$TOR_WAIT"); do
