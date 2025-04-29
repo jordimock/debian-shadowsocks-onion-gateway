@@ -5,7 +5,7 @@ set -euo pipefail
 ########################################
 
 # Tor config
-TOR_HIDDEN_SERVICE_DIR="/var/lib/tor/shadowsocks-domain"
+TOR_HIDDEN_SERVICE_DIR="/var/lib/tor/hidden_service"
 TOR_WAIT=10
 
 # frp config
